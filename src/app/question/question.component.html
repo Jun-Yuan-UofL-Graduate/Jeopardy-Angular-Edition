@@ -1,0 +1,39 @@
+<div class="textSpace">
+<mat-dialog-content>
+    {{ data2.data.question }}
+</mat-dialog-content>
+@if (!allGuess && !gracePeriodOver){
+    {{countDown()}}
+}
+@else if(!allGuess && gracePeriodOver && !correctGuess){
+    @if(currentPlayer == 0){
+        @if(countDown() >= 0){
+            {{countDown()}}
+        }
+        <p>Who want's to Guess?</p>
+        <input matInput (keyup)="keyPress($event)">
+    }
+    @else{
+        @if(countDown() >= 0){
+            {{countDown()}}
+        }
+        <p>Player {{currentPlayer}}'s Turn</p>
+        <p>{{ data2.data.beginning }}</p>
+        <mat-form-field>
+            <input matInput [(ngModel)]="answer" (keyup)="keyPress2($event)" (keyup.enter)="checkAnswer()">
+        </mat-form-field>
+    }
+}
+@else if(correctGuess){
+    <p>Correct!</p>
+}
+@else {
+        <p>Correct Answer is:</p>
+        <p>{{ data2.data.answer }}</p> 
+}
+</div>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    <button (click)="revealAnswer()">Give Up</button>
+</mat-dialog-actions>

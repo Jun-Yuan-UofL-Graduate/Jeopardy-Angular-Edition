@@ -1,0 +1,49 @@
+<app-player-header></app-player-header>
+<div class="final">
+    @if(questionFlag != true){
+        <h1>Welcome To FINAL Jeopardy!</h1>
+        <h2>The category is</h2>
+        <h1 id="category">{{dataSource.category}}</h1>
+        @if(status === ""){
+            <h3>Make Your Wagers!</h3>
+        }
+        @else{
+            <h3>{{status}}</h3>
+        }
+        <div *ngFor="let player of players; let i = index">
+            <div class="columns">
+                <p>{{player.name}} Min: 1 </p>
+                <input type="number" matInput [(ngModel)]="wagerArray[i]">
+                <!--
+                <mat-form-field>
+                    <input type="number" matInput [(ngModel)]="wagerArray[i]">
+                </mat-form-field>
+                -->
+                <p> Max: {{player.score}}</p>
+            </div>
+        </div>
+        <button (click)="checkWagers()">Ready</button>
+    }
+    @else if(inputFlag != true){
+        <div class="question">
+            <h2>{{dataSource.question}}</h2>
+            <h1>{{countDown()}}</h1>
+        </div>
+        <button (click)="endGuessing()">End Guessing</button>
+    }
+    @else if(revealFlag != true){
+        <div *ngFor="let player of players; let i = index">
+            <h2>{{player.name}}'s Guess</h2>
+            <input matInput [(ngModel)]="answerArray[i]">
+        </div>
+        <button (click)="revealAnswer()">End Guessing</button>
+    }
+    @else{
+        <h2>The Answer Is...</h2>
+        <h1>{{dataSource.answer}}</h1>
+        <div *ngFor="let player of players; let i = index">
+            <h2>{{player.name}} Guessed</h2>
+            <h2>{{answerArray[i]}}</h2>
+        </div>
+    }
+</div>

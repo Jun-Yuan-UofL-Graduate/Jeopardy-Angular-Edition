@@ -1,0 +1,16 @@
+<div id="welcome">
+    <div>
+        <h1>This is</h1>
+        <h1>JEOPARDY!</h1>
+        <h2>Version {{versionNum}}</h2>
+        @if(isPlay){
+            <button (click)="isPlay = false">Let's Play!</button>   
+        }
+        @else{
+            <p>How many players are playing today?</p>
+            <button mat-button mat-dialog-close (click)="openDialog(1)">One</button>
+            <button mat-button mat-dialog-close (click)="openDialog(2)">Two</button>
+            <button mat-button mat-dialog-close (click)="openDialog(3)">Three</button>
+        }
+    </div>
+</div>

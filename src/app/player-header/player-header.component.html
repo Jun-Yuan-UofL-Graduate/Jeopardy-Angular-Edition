@@ -1,0 +1,10 @@
+<div id="scoreBoard">
+    <div class="scores" *ngFor="let player of players(); let i = index">
+      <div [ngClass]="{'lastRight' : player.lastCorrect == true, 'playerBox' : player.lastCorrect == false}">
+        {{ player.name }}:
+          <div [ngClass]="{'positive' : player.score >= 0, 'negative' : player.score < 0}">
+          {{ player.score}}
+        </div>
+      </div>
+    </div>  
+  </div>

@@ -1,0 +1,20 @@
+.columns{
+    /*justify-content: space-between;*/
+    display: inline-flex;
+    /*width: 30%;*/
+}
+
+.final{
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    color: white;
+}
+
+.question{
+    font-size: 32px;
+}
+
+#category{
+    color: goldenrod;
+}

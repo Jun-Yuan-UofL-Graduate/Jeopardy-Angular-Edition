@@ -1,0 +1,19 @@
+<mat-dialog-content>
+    <div>
+        <p class="dialogBox">Player 1 Name?</p>
+        <input matInput [(ngModel)]="name1">
+    </div>
+    <div [ngStyle]="{'display': (nums >= 2) ? 'inline' : 'none'}">
+        <p class="dialogBox">Player 2 Name?</p>
+        <input matInput [(ngModel)]="name2">
+    </div>
+    <div [ngStyle]="{'display': (nums >= 3) ? 'inline' : 'none'}">
+        <p class="dialogBox">Player 3 Name?</p>
+        <input matInput [(ngModel)]="name3">
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button mat-dialog-close (click) = "confirm()">Confirm</button>
+</mat-dialog-actions>

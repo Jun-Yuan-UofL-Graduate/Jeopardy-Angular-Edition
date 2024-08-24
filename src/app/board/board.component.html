@@ -1,0 +1,29 @@
+ <!--<button (click)="testFunc()">Button</button>-->
+
+@if(gameOver != true){
+  <app-player-header></app-player-header>
+  <div id="board">
+    <div class="columns" *ngFor="let column of dataSource; let j = index">
+      <mat-card class="categories">
+        {{column.category}}
+      </mat-card>
+      <mat-card class="mat-elevation-z0" *ngFor="let question of column.questions; let k = index" 
+        (click)="goToQuestion(question, j, k)" 
+        [ngStyle]="question.beenClicked?{'pointer-events': 'none', 'color': 'blue'} : {}">
+        @if(switchedData == false){
+          ${{question.value}}
+        }
+        @else{
+          ${{question.value * 2}}
+        }
+      </mat-card>
+    </div>
+  </div>
+}
+@else{
+<div class="results">
+  <h1>Congratulations!</h1>
+  <h1>The Winner Is {{bestPlayer.name}}!</h1>
+  <h2>Your Score Was {{bestPlayer.score}} Points</h2>
+</div>
+}

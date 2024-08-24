@@ -1,0 +1,40 @@
+<h1>Daily Double!</h1>
+@if(!proceed){
+    <h2>What Is Your Wager?</h2>
+    {{status}}
+    <div>
+        <p>Min: {{minVal}} </p>
+        <p>Max: {{maxVal}}</p>
+    </div>
+    <mat-form-field>
+        <input type="number" matInput [(ngModel)]="wager" (keyup.enter)="checkWager()">
+    </mat-form-field>
+}
+@else{
+    <div class="textSpace">
+        @if(!correctGuess && !wrongGuess){
+            {{displayNum}}
+        }
+        <mat-dialog-content>
+            {{ data2.data.question }}
+        </mat-dialog-content>
+      
+        @if(!correctGuess && !wrongGuess){
+            <p>{{ data2.data.beginning }}</p>
+            <mat-form-field>
+                <input matInput [(ngModel)]="answer" (keyup.enter)="checkAnswer()">
+            </mat-form-field>
+        }
+        @else if(correctGuess){
+            <p>Correct!</p>
+        }
+        @else{
+            <p>Correct Answer is:</p>
+            <p>{{ data2.data.answer }}</p>
+        }
+    </div>
+        <mat-dialog-actions>
+            <button mat-button mat-dialog-close>Close</button>
+            <button (click)="revealAnswer()">Give Up</button>
+        </mat-dialog-actions>
+}

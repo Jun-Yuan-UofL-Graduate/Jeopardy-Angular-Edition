@@ -1,0 +1,31 @@
+#welcome{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    height: fit-content;
+}
+
+h1, h2{
+    font-size: 56px;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+p{
+    color: whitesmoke;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+button{
+    font-size: 26px;
+    font-weight: bold;
+}
+
+mat-dialog-content{
+    font-size: 20px;
+}
+
+.dialogBox{
+    color:black;
+}
