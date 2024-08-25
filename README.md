@@ -1,4 +1,7 @@
-# MyApp
+# IMPORTANT NOTICE ABOUT THIS PROJECT
+This project is NOT intended for profit or commercial use. This project was designed for personal use with family. This repository exists to demonstrate my current skills and abilities with Angular, HTML, CSS, and Typescript to employers.
+
+# Jeopardy-Angular-Edition
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.4.
 
