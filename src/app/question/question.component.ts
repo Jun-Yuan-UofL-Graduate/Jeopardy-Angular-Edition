@@ -208,29 +208,25 @@ export class DailyQuestionComponent {
   scoreService = inject(ScoreService);
   dialogRef = inject(MatDialogRef<DailyQuestionComponent>);
 
-
- answer = "";
- //numGuess = 0;
- minVal = 0;
- maxVal = 0;
- wager: number = 0;
- currentPlayer = 0;
- currentMax = 0;
- correctGuess = false;
- wrongGuess = false;
+ currentPlayer: number = 0;
+ currentMax: number = 0;
+ displayTimer: number = 0;
+ minVal: number = 0;
+ maxVal: number = 0;
  newScore: number = 0;
-
+ wager: number = 0;
+ answer: string = "";
  status: string = '';
+ correctGuess: boolean = false;
+ revealFlag: boolean = false;
  proceed: boolean = false;
- displayNum: any;
+ countDown = signal(-1);
+
 
  timerDown(givenTime: number){
-  const timer = setInterval(() => {
-    this.displayNum = givenTime;
-    givenTime--;
-    if(givenTime == 0){
-      clearInterval(timer);
-    }
+  this.countDown.update(value => value = givenTime);
+  this.displayTimer = window.setInterval(() => {
+    this.countDown.update(value => value - 1);
   }, 1000)
  }
 
@@ -241,10 +237,22 @@ export class DailyQuestionComponent {
       this.status = 'You Can\'t Bet That Many Points!'
     }else{
       this.proceed = true;
-      this.timerDown(59);
+      this.timerDown(10);
+      setTimeout(() => {
+        clearInterval(this.displayTimer),
+        this.countDown.update(value => value = -1),
+        this.checkAnswer()
+      }, 10500);
     }
   }
   
+  keyPress2(x: any){
+    if(x.target.value != null){
+      clearInterval(this.displayTimer);
+      this.countDown.update(value => value = -1);
+    }
+   }
+
   checkAnswer(){
     if(((this.answer).toLowerCase() == (this.data2.data.answer).toLowerCase())){
       this.correctGuess = true;
@@ -255,27 +263,19 @@ export class DailyQuestionComponent {
         {name: value.name, score: this.newScore, lastCorrect: true, wrongGuess: false} 
         : {name: value.name, score: value.score, lastCorrect: false, wrongGuess: false} 
       ));
-  
-      this.closingData();
       //setTimeout(() => {this.dialogRef.close({data: this.currentPlayer});}, 3000)
     }else{
       //this.answer = "";
-      this.wrongGuess = true;
+      this.revealFlag = true;
       const playerID = this.currentPlayer;
       this.newScore = this.scoreService.finalHope()[playerID].score - this.wager;
-
       this.scoreService.finalHope.update(values => 
         values.map(value => value.name === this.scoreService.finalHope()[playerID].name ? 
         {name: value.name, score: this.newScore, lastCorrect: value.lastCorrect, wrongGuess: false} : value
       ));
-
     }
-  }
-
-  revealAnswer(){
-    //this.resetWrongGuess();
     this.closingData();
-   }
+  }
 
    closingData(){
     setTimeout(() => {this.dialogRef.close({

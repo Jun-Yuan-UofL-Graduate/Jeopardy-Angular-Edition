@@ -49,7 +49,7 @@ export class BoardComponent {
 
   scoreService = inject(ScoreService);
   readonly dialog = inject(MatDialog);
-  numOfQuestions: number = 29;
+  numOfQuestions: number = 0;
   switchedData: boolean = false;
   gameOver: boolean = false;
   bestPlayer: any = {};
