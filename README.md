@@ -1,5 +1,5 @@
 # IMPORTANT NOTICE ABOUT THIS PROJECT
-This project is NOT intended for profit or commercial use. This project was designed for personal use with family. This repository exists to demonstrate my current skills and abilities with Angular, HTML, CSS, and Typescript to employers.
+This project is NOT intended for profit or commercial use. This project was designed for personal use with family. This repository exists to demonstrate my current skills and abilities with Angular, HTML, CSS, and Typescript to employers. Any copyright infringement regarding Jeopardy or any IPs used in these questions is not intended. Each IP is the property of each respective company and owner.
 
 # Jeopardy-Angular-Edition
 
