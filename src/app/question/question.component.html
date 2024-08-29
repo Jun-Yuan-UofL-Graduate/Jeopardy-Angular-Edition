@@ -3,19 +3,19 @@
     {{ data2.data.question }}
 </mat-dialog-content>
 @if (!allGuess && !gracePeriodOver){
-    {{countDown()}}
+    {{timerService.countDown()}}
 }
 @else if(!allGuess && gracePeriodOver && !correctGuess){
     @if(currentPlayer == 0){
-        @if(countDown() >= 0){
-            {{countDown()}}
+        @if(timerService.countDown() >= 0){
+            {{timerService.countDown()}}
         }
         <p>Who want's to Guess?</p>
         <input matInput (keyup)="keyPress($event)">
     }
     @else{
-        @if(countDown() >= 0){
-            {{countDown()}}
+        @if(timerService.countDown() >= 0){
+            {{timerService.countDown()}}
         }
         <p>Player {{currentPlayer}}'s Turn</p>
         <p>{{ data2.data.beginning }}</p>
@@ -34,6 +34,6 @@
 </div>
 
 <mat-dialog-actions>
-    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button mat-dialog-close (click)="clearTimers()">Close</button>
     <button (click)="revealAnswer()">Give Up</button>
 </mat-dialog-actions>

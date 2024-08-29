@@ -1,13 +1,14 @@
 import { Component, inject, Inject, signal } from '@angular/core';
 import { MatCardModule}  from '@angular/material/card';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {FormsModule} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 import { ScoreService } from '../score.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { interval, take, of, timer, concatMap } from 'rxjs';
+//import { interval, take, of, timer, concatMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { TimerService } from '../timer.service';
 
 @Component({
   selector: 'app-question',
@@ -30,12 +31,13 @@ constructor(@Inject(MAT_DIALOG_DATA) public data2: any) {
   //console.log(data2); 
   //console.log(data2.data);
   //console.log(data2.switched);
-  this.timerDown(5);
-  setTimeout(() => {clearInterval(this.displayTimer)}, 5000);
-  setTimeout(() => {this.gracePeriodOver = true, this.guessingPeriod()}, 5500);
+  this.timerService.timerDown(5);
+  setTimeout(() => {this.timerService.stopInterval()}, 5000);
+  this.singleID = window.setTimeout(() => {this.gracePeriodOver = true, this.guessingPeriod()}, 5500);
 }
 
 scoreService = inject(ScoreService);
+timerService = inject(TimerService);
 givenList = this.scoreService.finalHope;
 dialogRef = inject(MatDialogRef<QuestionComponent>);
 
@@ -48,20 +50,11 @@ dialogRef = inject(MatDialogRef<QuestionComponent>);
  numGuess: number = 0;
  currentPlayer: number = 0;
  newScore: number = 0;
- displayTimer: number = 0;
  singleID: number = 0;
- countDown = signal(0);
-
-timerDown(givenTime: number){
-  this.countDown.update(value => value = givenTime);
-  this.displayTimer = window.setInterval(() => {
-    this.countDown.update(value => value - 1);
-  }, 1000)
- }
 
  playerGuessTime(playerID: number){
   this.currentPlayer = playerID;
-  this.timerDown(10);
+  this.timerService.timerDown(10);
   this.singleID = window.setTimeout(() => {this.checkAnswer();}, 10500);
  }
 
@@ -84,7 +77,7 @@ timerDown(givenTime: number){
  keyPress2(x: any){
   if(x.target.value != null){
     this.clearTimers();
-    this.countDown.update(value => value = -1);
+    this.timerService.hideCountDown();
   }
  }
 
@@ -98,13 +91,13 @@ timerDown(givenTime: number){
 
  clearTimers(){
   console.log('Clear Time!');
-  clearInterval(this.displayTimer);
+  this.timerService.stopInterval();
   clearTimeout(this.singleID);
  }
 
  guessingPeriod(){
-  this.timerDown(10);
-  this.singleID = window.setTimeout(() => {clearInterval(this.displayTimer), this.revealAnswer()}, 10500);
+  this.timerService.timerDown(10);
+  this.singleID = window.setTimeout(() => {this.timerService.stopInterval(), this.revealAnswer()}, 10500);
  }
 
  revealAnswer(){
@@ -206,11 +199,11 @@ export class DailyQuestionComponent {
     //console.log(data2);
 }
   scoreService = inject(ScoreService);
+  timerService = inject(TimerService);
   dialogRef = inject(MatDialogRef<DailyQuestionComponent>);
 
  currentPlayer: number = 0;
  currentMax: number = 0;
- displayTimer: number = 0;
  minVal: number = 0;
  maxVal: number = 0;
  newScore: number = 0;
@@ -219,16 +212,8 @@ export class DailyQuestionComponent {
  status: string = '';
  correctGuess: boolean = false;
  revealFlag: boolean = false;
+ guessFlag: boolean = false;
  proceed: boolean = false;
- countDown = signal(-1);
-
-
- timerDown(givenTime: number){
-  this.countDown.update(value => value = givenTime);
-  this.displayTimer = window.setInterval(() => {
-    this.countDown.update(value => value - 1);
-  }, 1000)
- }
 
   checkWager(){
     if(this.wager < this.minVal){
@@ -237,19 +222,24 @@ export class DailyQuestionComponent {
       this.status = 'You Can\'t Bet That Many Points!'
     }else{
       this.proceed = true;
-      this.timerDown(10);
+      this.timerService.timerDown(5);
       setTimeout(() => {
-        clearInterval(this.displayTimer),
-        this.countDown.update(value => value = -1),
+        this.timerService.stopInterval();
+        this.guessFlag = true, 
+        this.timerService.timerDown(10)
+      }, 5500)
+      setTimeout(() => {
+        this.timerService.stopInterval();
+        this.timerService.hideCountDown();
         this.checkAnswer()
-      }, 10500);
+      }, 15500);
     }
   }
   
   keyPress2(x: any){
     if(x.target.value != null){
-      clearInterval(this.displayTimer);
-      this.countDown.update(value => value = -1);
+      this.timerService.stopInterval();
+      this.timerService.hideCountDown();
     }
    }
 

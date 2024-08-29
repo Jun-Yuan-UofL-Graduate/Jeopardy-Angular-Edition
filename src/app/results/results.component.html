@@ -10,8 +10,16 @@
 }
 @else if(!tieFlag){
     <h1>Congratulations!</h1>
-    <h1>The Winner Is {{bestPlayer.name}}!</h1>
-    <h2>Your Score Was {{bestPlayer.score}} Points</h2>
+    <h1>The Winner Is 
+        <div class="standOut">
+            {{bestPlayer.name}}!
+        </div>
+    </h1>
+    <h2>Your Score Was 
+        <div class="standOut">
+            {{bestPlayer.score}} Points
+        </div>
+    </h2>
 }
 @else{
     <h1>It Seems There Was a Tie!</h1>

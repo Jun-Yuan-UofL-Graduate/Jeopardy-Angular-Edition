@@ -1,0 +1,10 @@
+h1, h2{
+    font-size: 56px;
+    font-weight: bold;
+    text-align: center;
+    color: whitesmoke;
+}
+
+.standOut{
+    color: goldenrod;
+}

@@ -24,10 +24,10 @@
         </div>
         <button (click)="checkWagers()">Ready</button>
     }
-    @else if(inputFlag != true){
+    @else if(questionFlag == true && inputFlag != true){
         <div class="question">
             <h2>{{dataSource.question}}</h2>
-            <h1>{{countDown()}}</h1>
+            <h1>{{timerService.countDown()}}</h1>
         </div>
         <button (click)="endGuessing()">End Guessing</button>
     }

@@ -1,11 +1,12 @@
 import { Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { PlayerHeaderComponent } from '../player-header/player-header.component';
 import { ScoreService } from '../score.service';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { QuestionList } from '../questionList';
-
+import { TimerService } from '../timer.service';
 @Component({
   selector: 'app-final',
   standalone: true,
@@ -19,7 +20,7 @@ import { QuestionList } from '../questionList';
   styleUrl: './final.component.css'
 })
 export class FinalComponent {
-  constructor(){
+  constructor(private router: Router){
     //console.log(this.dataSource);
     //console.log(this.players);
     this.scoreService.selectFinalPlayers();
@@ -32,6 +33,7 @@ export class FinalComponent {
   }
 
   scoreService = inject(ScoreService);
+  timerService = inject(TimerService);
   players = this.scoreService.finalHope();
   wagerArray: number[] = [];
   answerArray: string[] = [];
@@ -41,7 +43,7 @@ export class FinalComponent {
   inputFlag: boolean = false;
   displayTimer: number = 0;
   singleID: number = 0;
-  countDown = signal(30);
+  //countDown = signal(30);
   bestPlayer: any = {};
   status = "";
   acceptedWagers: boolean = false;
@@ -64,16 +66,24 @@ export class FinalComponent {
     //console.log(this.wagerArray);
     if(this.acceptedWagers == true){
       this.questionFlag = true;
-      this.displayTimer = window.setInterval(() => {
-        this.countDown.update(value => value - 1);
-      }, 1000)
-      setTimeout(() => {clearInterval(this.displayTimer), this.inputFlag = true}, 30500);
+      console.log('Accepted Wagers');
+      //this.displayTimer = window.setInterval(() => {
+        //this.countDown.update(value => value - 1);
+      //}, 1000)
+      this.timerService.stopInterval();
+      this.timerService.timerDown(10);
+      this.displayTimer = window.setTimeout(() => {
+        this.endGuessing();
+      }, 10500)
+      //setTimeout(() => {clearInterval(this.displayTimer), this.inputFlag = true}, 30500);
     }
   }
 
   endGuessing(){
     this.inputFlag = true;
-    clearInterval(this.displayTimer);
+    //clearInterval(this.displayTimer);
+    this.timerService.hideCountDown();
+    this.timerService.stopInterval();
   }
 
   revealAnswer(){
@@ -99,6 +109,7 @@ export class FinalComponent {
           ));
         }
       }
+      setTimeout(() => {this.router.navigateByUrl('/results', {skipLocationChange: true})}, 5000);
       this.bestPlayer = this.scoreService.bestPlayer();
       console.log(this.bestPlayer)
   }

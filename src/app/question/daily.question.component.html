@@ -12,26 +12,32 @@
 }
 @else{
     <div class="textSpace">
-        @if(countDown() >= 0){
-            {{countDown()}}
+        @if(timerService.countDown() >= 0){
+            {{timerService.countDown()}}
         }
         <mat-dialog-content>
             {{ data2.data.question }}
         </mat-dialog-content>
-      
-        @if(!correctGuess && !revealFlag){
-            <p>{{ data2.data.beginning }}</p>
-            <mat-form-field>
-                <input matInput [(ngModel)]="answer" (keyup)="keyPress2($event)" (keyup.enter)="checkAnswer()">
-            </mat-form-field>
-        }
-        @else if(correctGuess){
-            <p>Correct!</p>
-        }
-        @else{
-            <p>Correct Answer is:</p>
-            <p>{{ data2.data.answer }}</p>
-        }
+        @if(guessFlag == true){
+            
+        
+            @if(!correctGuess && !revealFlag){
+                <p>{{ data2.data.beginning }}</p>
+                <mat-form-field>
+                    <input matInput [(ngModel)]="answer" (keyup)="keyPress2($event)" (keyup.enter)="checkAnswer()">
+                </mat-form-field>
+            }
+
+        
+            @else if(correctGuess){
+                <p>Correct!</p>
+            }
+            @else{
+                <p>Correct Answer is:</p>
+                <p>{{ data2.data.answer }}</p>
+            }
+
+    }
     </div>
         
 }
