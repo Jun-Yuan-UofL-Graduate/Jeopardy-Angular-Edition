@@ -4,7 +4,7 @@ import { MatCardModule}  from '@angular/material/card';
 import { QuestionComponent } from '../question/question.component';
 import { MatDialog, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { ScoreService } from '../score.service';
+import { PlayerService } from '../player.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { QuestionList } from '../questionList';
@@ -40,14 +40,19 @@ export class BoardComponent {
    this.dataSource = new QuestionList().dataSource;
 
 
-   let rand = Math.floor(Math.random() * this.scoreService.finalHope().length);
-   this.scoreService.finalHope()[rand].lastCorrect = true;
+   let rand = Math.floor(Math.random() * this.playerService.playerArray().length);
+   this.playerService.playerArray()[rand].lastCorrect = true;
    //this.dDoubleNum = this.randomDaily(1, 28);
    //console.log('dDoubleNum: ' + this.dDoubleNum);
-   //console.log(this.scoreService.finalPlayers());
+   //console.log(this.playerService.finalPlayers());
+
+   
+   //this.playerService.playerArray()[0].score = 1000;
+   //this.playerService.playerArray()[1].score = 1000;
+   //this.playerService.playerArray()[2].score = 1000;
   }
 
-  scoreService = inject(ScoreService);
+  playerService = inject(PlayerService);
   readonly dialog = inject(MatDialog);
   numOfQuestions: number = 0;
   switchedData: boolean = false;
@@ -58,8 +63,8 @@ export class BoardComponent {
 
   double_Dict = {
     first:[0,1],
-    second:[1,2],
-    third:[1,3]
+    second:[2,2],
+    third:[5,3]
   }
 
   public randomDaily(min: number, max: number): number{
@@ -129,9 +134,11 @@ export class BoardComponent {
   }
 
   finalJeopardy(){
-    //this.scoreService.selectFinalPlayers();
+    //This feature is currently incomplete. This function just goes to the final component
+
+    //this.playerService.selectFinalPlayers();
     /*
-    if(this.scoreService.finalHope().length < 2){
+    if(this.playerService.playerArray().length < 2){
       setTimeout(() => {this.router.navigateByUrl('/results', {skipLocationChange: true});}, 3000);
     }
     */

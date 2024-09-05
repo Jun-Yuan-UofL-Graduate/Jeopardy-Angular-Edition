@@ -29,7 +29,9 @@
             <h2>{{dataSource.question}}</h2>
             <h1>{{timerService.countDown()}}</h1>
         </div>
-        <button (click)="endGuessing()">End Guessing</button>
+        @if(writeFlag == true){
+            <button (click)="endGuessing()">End Guessing</button>
+        }
     }
     @else if(revealFlag != true){
         <div *ngFor="let player of players; let i = index">
@@ -41,9 +43,13 @@
     @else{
         <h2>The Answer Is...</h2>
         <h1>{{dataSource.answer}}</h1>
-        <div *ngFor="let player of players; let i = index">
-            <h2>{{player.name}} Guessed</h2>
-            <h2>{{answerArray[i]}}</h2>
+        <div class="side-by-side" *ngFor="let player of players; let i = index">
+            <div>
+                <h2>{{player.name}} Guessed</h2>
+                <h2>{{answerArray[i]}}</h2>
+                <h2>{{player.name}} Wagered</h2>
+                <h2>{{wagerArray[i]}} Points</h2>
+            </div>
         </div>
     }
 </div>

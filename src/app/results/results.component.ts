@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ScoreService } from '../score.service';
+import { PlayerService } from '../player.service';
 @Component({
   selector: 'app-results',
   standalone: true,
@@ -11,14 +11,14 @@ export class ResultsComponent {
   constructor(){
     console.log('This is the end');
   }
-  scoreService = inject(ScoreService);
-  bestPlayer = this.scoreService.bestPlayer();
+  playerService = inject(PlayerService);
+  bestPlayer = this.playerService.bestPlayer();
   tieFlag: boolean = false;
-  numPlayers: number = this.scoreService.finalHope().length;
+  numPlayers: number = this.playerService.playerArray().length;
   isTie(){
-    if(this.scoreService.finalHope()[0].score === this.scoreService.finalHope()[1].score || 
-       this.scoreService.finalHope()[0].score === this.scoreService.finalHope()[2].score ||
-       this.scoreService.finalHope()[1].score === this.scoreService.finalHope()[2].score){
+    if(this.playerService.playerArray()[0].score === this.playerService.playerArray()[1].score || 
+       this.playerService.playerArray()[0].score === this.playerService.playerArray()[2].score ||
+       this.playerService.playerArray()[1].score === this.playerService.playerArray()[2].score){
       this.tieFlag = true;
     }
   }

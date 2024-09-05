@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
-import { ScoreService } from '../score.service';
+import { PlayerService } from '../player.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,11 +12,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './player-header.component.css'
 })
 export class PlayerHeaderComponent {
-  scoreService = inject(ScoreService);
+  playerService = inject(PlayerService);
   players: any;
 
   constructor(private cd: ChangeDetectorRef){
-    this.players = this.scoreService.finalHope;
+    this.players = this.playerService.playerArray;
   }
 
   public changeHeader(){

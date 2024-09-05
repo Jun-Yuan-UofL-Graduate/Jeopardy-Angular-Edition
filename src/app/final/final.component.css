@@ -23,3 +23,9 @@ button{
     font-size: 26px;
     font-weight: bold;
 }
+
+.side-by-side{
+    display: inline-flex;
+    width: 25%;
+    text-align: center;
+}

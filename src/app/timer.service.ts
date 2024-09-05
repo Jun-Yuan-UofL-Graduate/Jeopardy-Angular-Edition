@@ -20,9 +20,7 @@ export class TimerService {
 
     stopInterval(){
         clearInterval(this.displayTimer);
-    }
-
-    hideCountDown(){
         this.countDown.update(value => value = -1);
     }
+    
 }

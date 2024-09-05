@@ -4,7 +4,7 @@ import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angu
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { ScoreService } from '../score.service';
+import { PlayerService } from '../player.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //import { interval, take, of, timer, concatMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -27,18 +27,17 @@ import { TimerService } from '../timer.service';
 
 export class QuestionComponent {
 
-constructor(@Inject(MAT_DIALOG_DATA) public data2: any) {
-  //console.log(data2); 
-  //console.log(data2.data);
-  //console.log(data2.switched);
+constructor(@Inject(MAT_DIALOG_DATA) public question: any) {
   this.timerService.timerDown(5);
-  setTimeout(() => {this.timerService.stopInterval()}, 5000);
-  this.singleID = window.setTimeout(() => {this.gracePeriodOver = true, this.guessingPeriod()}, 5500);
+  this.singleID = window.setTimeout(() => {
+    this.timerService.stopInterval()
+    this.gracePeriodOver = true, 
+    this.guessingPeriod()}, 5500);
 }
 
-scoreService = inject(ScoreService);
+playerService = inject(PlayerService);
 timerService = inject(TimerService);
-givenList = this.scoreService.finalHope;
+givenList = this.playerService.playerArray;
 dialogRef = inject(MatDialogRef<QuestionComponent>);
 
 
@@ -59,14 +58,14 @@ dialogRef = inject(MatDialogRef<QuestionComponent>);
  }
 
  keyPress(x:any){
-  if(x.target.value == 'q' && this.scoreService.finalHope()[0].wrongGuess != true){
+  if(x.target.value == 'q' && this.playerService.playerArray()[0].wrongGuess != true){
     this.clearTimers();
     this.playerGuessTime(1);
-  }else if(x.target.value == 'p' && this.scoreService.finalHope()[1].wrongGuess != true){
+  }else if(x.target.value == 'p' && this.playerService.playerArray()[1].wrongGuess != true){
     this.clearTimers();
     this.playerGuessTime(2);
   }
-  else if(x.target.value == 'b' && this.scoreService.finalHope()[2].wrongGuess != true){
+  else if(x.target.value == 'b' && this.playerService.playerArray()[2].wrongGuess != true){
     this.clearTimers();
     this.playerGuessTime(3);
   }
@@ -77,12 +76,11 @@ dialogRef = inject(MatDialogRef<QuestionComponent>);
  keyPress2(x: any){
   if(x.target.value != null){
     this.clearTimers();
-    this.timerService.hideCountDown();
   }
  }
 
  maxGuess(){
-  if (this.numGuess == this.scoreService.numPlayers()){
+  if (this.numGuess == this.playerService.numPlayers()){
     console.log("Max Guesses Reached")
     this.clearTimers();
     this.allGuess = true;
@@ -107,22 +105,22 @@ dialogRef = inject(MatDialogRef<QuestionComponent>);
  }
 
  resetWrongGuess(){
-  for(let i = 0; i < this.scoreService.finalHope().length; i++){
-    this.scoreService.finalHope()[i].wrongGuess = false;
+  for(let i = 0; i < this.playerService.playerArray().length; i++){
+    this.playerService.playerArray()[i].wrongGuess = false;
   }
  }
   checkAnswer(){
-    if(((this.answer).toLowerCase() == (this.data2.data.answer).toLowerCase())){
+    if(((this.answer).toLowerCase() == (this.question.data.answer).toLowerCase())){
       //this.result = "Correct"
       const playerID = this.currentPlayer - 1;
       this.correctGuess = true;
-      if(this.data2.switched != true){
-        this.newScore = this.scoreService.finalHope()[playerID].score + this.data2.data.value;
+      if(this.question.switched != true){
+        this.newScore = this.playerService.playerArray()[playerID].score + this.question.data.value;
       }else{
-        this.newScore = this.scoreService.finalHope()[playerID].score + (this.data2.data.value * 2);
+        this.newScore = this.playerService.playerArray()[playerID].score + (this.question.data.value * 2);
       }
-      this.scoreService.finalHope.update(values => 
-        values.map(value => value.name === this.scoreService.finalHope()[playerID].name ? 
+      this.playerService.playerArray.update(values => 
+        values.map(value => value.name === this.playerService.playerArray()[playerID].name ? 
         {name: value.name, score: this.newScore, lastCorrect: true, wrongGuess: false} 
         : {name: value.name, score: value.score, lastCorrect: false, wrongGuess: false} 
       ));
@@ -131,13 +129,13 @@ dialogRef = inject(MatDialogRef<QuestionComponent>);
       //this.result = "Wrong"
       this.answer = "";
       const playerID = this.currentPlayer - 1;
-      if(this.data2.switched != true){
-        this.newScore = this.scoreService.finalHope()[playerID].score - this.data2.data.value;
+      if(this.question.switched != true){
+        this.newScore = this.playerService.playerArray()[playerID].score - this.question.data.value;
       }else{
-        this.newScore = this.scoreService.finalHope()[playerID].score - (this.data2.data.value * 2);
+        this.newScore = this.playerService.playerArray()[playerID].score - (this.question.data.value * 2);
       }
-      this.scoreService.finalHope.update(values => 
-        values.map(value => value.name === this.scoreService.finalHope()[playerID].name ? 
+      this.playerService.playerArray.update(values => 
+        values.map(value => value.name === this.playerService.playerArray()[playerID].name ? 
         {name: value.name, score: this.newScore, lastCorrect: value.lastCorrect, wrongGuess: true} : value
       ));
       this.numGuess++;
@@ -148,7 +146,7 @@ dialogRef = inject(MatDialogRef<QuestionComponent>);
     }
     if(this.allGuess){
       this.resetWrongGuess();
-      setTimeout(() => {this.dialogRef.close({data: this.data2.playerScore});}, 3000)
+      setTimeout(() => {this.dialogRef.close({});}, 3000)
     }
   }
   
@@ -171,8 +169,8 @@ dialogRef = inject(MatDialogRef<QuestionComponent>);
 
 export class DailyQuestionComponent {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data2: any) {
-    if(this.data2.switched){
+  constructor(@Inject(MAT_DIALOG_DATA) public question: any) {
+    if(this.question.switched){
       this.minVal = 200;
       this.currentMax = 2000;
     }else{
@@ -183,22 +181,20 @@ export class DailyQuestionComponent {
     this.wager = this.minVal.valueOf();
     //console.log('Wager: ' + this.wager);
 
-    for(let i = 0; i < this.scoreService.finalHope().length; i++){
-      if(this.scoreService.finalHope()[i].lastCorrect == true){
-        //this.currentPlayer = i + 1;
+    for(let i = 0; i < this.playerService.playerArray().length; i++){
+      if(this.playerService.playerArray()[i].lastCorrect == true){
         this.currentPlayer = i;
-        //console.log(this.scoreService.finalHope()[i]);
-        if(this.scoreService.finalHope()[i].score < this.currentMax){
+        if(this.playerService.playerArray()[i].score < this.currentMax){
           this.maxVal = this.currentMax
         }else{
-          this.maxVal = this.scoreService.finalHope()[i].score;
+          this.maxVal = this.playerService.playerArray()[i].score;
         }
         break;
       }
     }
-    //console.log(data2);
+    //console.log(question);
 }
-  scoreService = inject(ScoreService);
+  playerService = inject(PlayerService);
   timerService = inject(TimerService);
   dialogRef = inject(MatDialogRef<DailyQuestionComponent>);
 
@@ -207,6 +203,7 @@ export class DailyQuestionComponent {
  minVal: number = 0;
  maxVal: number = 0;
  newScore: number = 0;
+ timeOutID: number = 0;
  wager: number = 0;
  answer: string = "";
  status: string = '';
@@ -228,9 +225,8 @@ export class DailyQuestionComponent {
         this.guessFlag = true, 
         this.timerService.timerDown(10)
       }, 5500)
-      setTimeout(() => {
+      this.timeOutID = window.setTimeout(() => {
         this.timerService.stopInterval();
-        this.timerService.hideCountDown();
         this.checkAnswer()
       }, 15500);
     }
@@ -239,37 +235,30 @@ export class DailyQuestionComponent {
   keyPress2(x: any){
     if(x.target.value != null){
       this.timerService.stopInterval();
-      this.timerService.hideCountDown();
+      clearTimeout(this.timeOutID);
     }
    }
 
   checkAnswer(){
-    if(((this.answer).toLowerCase() == (this.data2.data.answer).toLowerCase())){
+    if(((this.answer).toLowerCase() == (this.question.data.answer).toLowerCase())){
       this.correctGuess = true;
       const playerID = this.currentPlayer;
-      this.newScore = this.scoreService.finalHope()[playerID].score + this.wager;
-      this.scoreService.finalHope.update(values => 
-        values.map(value => value.name === this.scoreService.finalHope()[playerID].name ? 
+      this.newScore = this.playerService.playerArray()[playerID].score + this.wager;
+      this.playerService.playerArray.update(values => 
+        values.map(value => value.name === this.playerService.playerArray()[playerID].name ? 
         {name: value.name, score: this.newScore, lastCorrect: true, wrongGuess: false} 
         : {name: value.name, score: value.score, lastCorrect: false, wrongGuess: false} 
       ));
-      //setTimeout(() => {this.dialogRef.close({data: this.currentPlayer});}, 3000)
     }else{
-      //this.answer = "";
       this.revealFlag = true;
       const playerID = this.currentPlayer;
-      this.newScore = this.scoreService.finalHope()[playerID].score - this.wager;
-      this.scoreService.finalHope.update(values => 
-        values.map(value => value.name === this.scoreService.finalHope()[playerID].name ? 
+      this.newScore = this.playerService.playerArray()[playerID].score - this.wager;
+      this.playerService.playerArray.update(values => 
+        values.map(value => value.name === this.playerService.playerArray()[playerID].name ? 
         {name: value.name, score: this.newScore, lastCorrect: value.lastCorrect, wrongGuess: false} : value
       ));
     }
-    this.closingData();
+    setTimeout(() => {this.dialogRef.close({});}, 3000);
   }
 
-   closingData(){
-    setTimeout(() => {this.dialogRef.close({
-
-    });}, 3000);
-   }
 }

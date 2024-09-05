@@ -16,13 +16,13 @@
             {{timerService.countDown()}}
         }
         <mat-dialog-content>
-            {{ data2.data.question }}
+            {{ question.data.question }}
         </mat-dialog-content>
         @if(guessFlag == true){
             
         
             @if(!correctGuess && !revealFlag){
-                <p>{{ data2.data.beginning }}</p>
+                <p>{{ question.data.beginning }}</p>
                 <mat-form-field>
                     <input matInput [(ngModel)]="answer" (keyup)="keyPress2($event)" (keyup.enter)="checkAnswer()">
                 </mat-form-field>
@@ -34,7 +34,7 @@
             }
             @else{
                 <p>Correct Answer is:</p>
-                <p>{{ data2.data.answer }}</p>
+                <p>{{ question.data.answer }}</p>
             }
 
     }

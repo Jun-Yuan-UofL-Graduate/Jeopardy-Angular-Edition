@@ -1,7 +1,6 @@
 import { Component, inject, signal, Inject } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-import { routes } from '../app.routes';
-import { ScoreService } from '../score.service';
+import { PlayerService } from '../player.service';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -29,9 +28,9 @@ export class WelcomeComponent {
   constructor(private router: Router) { }
   readonly dialog = inject(MatDialog);
   readonly numPlayers = signal('');
-  scoreService = inject(ScoreService);
+  playerService = inject(PlayerService);
   public isPlay = true;
-  public versionNum: string = '1.4.0';
+  public versionNum: string = '1.5.1';
 
   public openDialog(players: number): void{
     this.dialog.open(WelcomePlayerComponent,{
@@ -66,7 +65,7 @@ export class WelcomeComponent {
 export class WelcomePlayerComponent {
   constructor(private router: Router, @Inject(MAT_DIALOG_DATA) public data: any)  { }
   readonly dialogRef = inject(MatDialogRef<WelcomeComponent>);
-  scoreService = inject(ScoreService);
+  playerService = inject(PlayerService);
 
   public name1 = 'Player 1';
   public name2 = 'Player 2';
@@ -75,13 +74,13 @@ export class WelcomePlayerComponent {
 
   confirm(): void{
     if(this.nums >= 1){
-      this.scoreService.addPlayer(this.name1);
+      this.playerService.addPlayer(this.name1);
     }
     if(this.nums >= 2){
-      this.scoreService.addPlayer(this.name2);
+      this.playerService.addPlayer(this.name2);
     }
     if(this.nums == 3){
-      this.scoreService.addPlayer(this.name3);
+      this.playerService.addPlayer(this.name3);
     }
     this.router.navigateByUrl('/board', {skipLocationChange: true});
   }

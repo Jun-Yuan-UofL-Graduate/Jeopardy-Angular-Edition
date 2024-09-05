@@ -16,5 +16,5 @@ import { PlayerHeaderComponent } from './player-header/player-header.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-
+  title: string = 'Jeopardy!';
 }
