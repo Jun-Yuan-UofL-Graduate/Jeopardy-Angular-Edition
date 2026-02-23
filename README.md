@@ -11,7 +11,7 @@ This project is NOT intended for profit or commercial use. This project was desi
 * Created a table with sortable headers, filtering, and a paginator to display questions based on the selected question category
 * Created Question-API and Question Services to send and retrieve data from the MySQL tables across different components
 * Added attributes QuestionType and QuestionSource to Question interface to allow non-text questions, such as images
-* Added Settings service to allow for direct variable manipulation, such as timer duration, without changing the code (Currently implemented)
+* Added Settings service to allow for direct variable manipulation, such as timer duration, without changing the code (Currently unimplemented)
 * Fixed Final Jeopardy bug where points would be given to players with incorrect answers 
 
 ## Version 1.5.0
