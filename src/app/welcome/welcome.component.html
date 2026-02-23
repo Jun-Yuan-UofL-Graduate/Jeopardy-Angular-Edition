@@ -3,8 +3,11 @@
         <h1>This is</h1>
         <h1>JEOPARDY!</h1>
         <h2>Version {{versionNum}}</h2>
+        <!-- <svg src="C:\Users\junyu\my-app\src\app\images\test.svg" alt="Test Image"></svg> -->
         @if(isPlay){
-            <button (click)="isPlay = false">Let's Play!</button>   
+            <button id="play_btn" (click)="isPlay = false">Let's Play!</button>
+            <button class="extra_btn" (click)="goToSettings()">Settings</button>   
+            <button class="extra_btn" (click)="goToDeveloper()">Developer Interface</button>
         }
         @else{
             <p>How many players are playing today?</p>

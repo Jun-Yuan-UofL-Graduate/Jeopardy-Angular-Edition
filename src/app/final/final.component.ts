@@ -89,30 +89,71 @@ export class FinalComponent {
   revealAnswer(){
     //console.log(this.answerArray);
     this.revealFlag = true;
-    this.checkAnswers();
+    //this.checkAnswers();
   }
-
+/*
   checkAnswers(){
       for(let i = 0; i < this.players.length; i++){
         let newScore: number;
-        if(((this.answerArray[i]).toLowerCase() == (this.dataSource.answer).toLowerCase())){
-          newScore = this.playerService.playerArray()[i].score + this.wagerArray[i];
-          this.playerService.playerArray.update(values => 
-            values.map(value => value.name === this.playerService.playerArray()[i].name ? 
-            {name: value.name, score: newScore, lastCorrect: false, wrongGuess: false} : value
-          ));
-        }else{
-          newScore = this.playerService.playerArray()[i].score - this.wagerArray[i];
-          this.playerService.playerArray.update(values => 
-            values.map(value => value.name === this.playerService.playerArray()[i].name ? 
-            {name: value.name, score: newScore, lastCorrect: value.lastCorrect, wrongGuess: true} : value
-          ));
+        for(let k = 0; k < this.dataSource.answer.length; k++){
+          if(((this.answerArray[i]).toLowerCase() == (this.dataSource.answer[k]).toLowerCase())){
+            newScore = this.playerService.playerArray()[i].score + this.wagerArray[i];
+            this.playerService.playerArray.update(values => 
+              values.map(value => value.name === this.playerService.playerArray()[i].name ? 
+              {name: value.name, score: newScore, lastCorrect: false, wrongGuess: false} : value
+            ));
+            break;
+          }else if(k == this.dataSource.answer.length){
+            newScore = this.playerService.playerArray()[i].score - this.wagerArray[i];
+            this.playerService.playerArray.update(values => 
+              values.map(value => value.name === this.playerService.playerArray()[i].name ? 
+              {name: value.name, score: newScore, lastCorrect: value.lastCorrect, wrongGuess: true} : value
+            ));
+          }
         }
       }
       setTimeout(() => {this.router.navigateByUrl('/results', {skipLocationChange: true})}, 5000);
       this.bestPlayer = this.playerService.bestPlayer();
-      console.log(this.bestPlayer)
+      //console.log(this.bestPlayer)
   }
+*/
 
+checkAnswers(i: number){
+    let newScore: number;
+    for(let k = 0; k < this.dataSource.answer.length; k++){
+      if(((this.answerArray[i]).toLowerCase() == (this.dataSource.answer[k]).toLowerCase())){
+        newScore = this.playerService.playerArray()[i].score + this.wagerArray[i];
+        this.playerService.playerArray.update(values => 
+          values.map(value => value.name === this.playerService.playerArray()[i].name ? 
+          {name: value.name, score: newScore, lastCorrect: false, wrongGuess: false} : value
+        ));
+        break;
+      }else if(k + 1 == this.dataSource.answer.length){
+        newScore = this.playerService.playerArray()[i].score - this.wagerArray[i];
+        this.playerService.playerArray.update(values => 
+          values.map(value => value.name === this.playerService.playerArray()[i].name ? 
+          {name: value.name, score: newScore, lastCorrect: value.lastCorrect, wrongGuess: true} : value
+        ));
+      }
+    }
 
+  //setTimeout(() => {this.router.navigateByUrl('/results', {skipLocationChange: true})}, 5000);
+  this.bestPlayer = this.playerService.bestPlayer();
+  //console.log(this.bestPlayer)
+}
+
+  clickNum: number = 0;
+  //maxClick: number = this.playerService.playerArray().length * 2;
+  addClick(){
+    console.log("ClickNum: " + this.clickNum);
+    //console.log("MaxNum: " + this.maxClick);
+    if(this.clickNum < this.playerService.playerArray().length * 2){
+      this.clickNum++;
+      if((this.clickNum % 2) == 0){
+        this.checkAnswers((this.clickNum / 2) - 1);
+      }
+    }else{
+      this.router.navigateByUrl('/results', {skipLocationChange: true})
+    }
+  }
 }

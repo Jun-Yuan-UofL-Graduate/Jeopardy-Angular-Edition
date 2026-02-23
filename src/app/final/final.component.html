@@ -42,13 +42,50 @@
     }
     @else{
         <h2>The Answer Is...</h2>
-        <h1>{{dataSource.answer}}</h1>
+        <h1>{{dataSource.answer[0]}}</h1>
+        <!--
         <div class="side-by-side" *ngFor="let player of players; let i = index">
             <div>
                 <h2>{{player.name}} Guessed</h2>
                 <h2>{{answerArray[i]}}</h2>
                 <h2>{{player.name}} Wagered</h2>
                 <h2>{{wagerArray[i]}} Points</h2>
+            </div>
+        </div>
+        -->
+        <div>
+            <button (click)="addClick()">Advance</button>
+        </div>
+        <div class="side-by-side">
+            <div>
+                @if(clickNum >= 1){
+                    <h2>{{players[0].name}} Guessed</h2>
+                    <h2>{{answerArray[0]}}</h2>
+                }
+                @if(clickNum >= 2){
+                    <h2>{{players[0].name}} Wagered</h2>
+                    <h2>{{wagerArray[0]}} Points</h2>
+                }
+            </div>
+            <div>
+                @if(clickNum >= 3){
+                    <h2>{{players[1].name}} Guessed</h2>
+                    <h2>{{answerArray[1]}}</h2>
+                }
+                @if(clickNum >= 4){
+                    <h2>{{players[1].name}} Wagered</h2>
+                    <h2>{{wagerArray[1]}} Points</h2>
+                }
+            </div>
+            <div>
+                @if(clickNum >= 5){
+                    <h2>{{players[2].name}} Guessed</h2>
+                    <h2>{{answerArray[2]}}</h2>
+                }
+                @if(clickNum >= 6){
+                    <h2>{{players[2].name}} Wagered</h2>
+                    <h2>{{wagerArray[2]}} Points</h2>
+                }
             </div>
         </div>
     }

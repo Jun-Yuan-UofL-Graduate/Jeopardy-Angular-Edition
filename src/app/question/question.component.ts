@@ -33,6 +33,10 @@ constructor(@Inject(MAT_DIALOG_DATA) public question: any) {
     this.timerService.stopInterval()
     this.gracePeriodOver = true, 
     this.guessingPeriod()}, 5500);
+
+  if(this.question.data.questionType == "image"){
+    this.questionMedia = this.question.data.questionSource
+  }
 }
 
 playerService = inject(PlayerService);
@@ -50,6 +54,7 @@ dialogRef = inject(MatDialogRef<QuestionComponent>);
  currentPlayer: number = 0;
  newScore: number = 0;
  singleID: number = 0;
+ questionMedia: string = "";
 
  playerGuessTime(playerID: number){
   this.currentPlayer = playerID;
@@ -100,6 +105,7 @@ dialogRef = inject(MatDialogRef<QuestionComponent>);
 
  revealAnswer(){
   this.allGuess = true;
+  this.clearTimers();
   this.resetWrongGuess();
   setTimeout(() => {this.dialogRef.close();}, 3000)
  }
@@ -192,6 +198,10 @@ export class DailyQuestionComponent {
         break;
       }
     }
+
+    if(this.question.data.questionType == "image"){
+      this.questionMedia = this.question.data.questionSource
+    }
     //console.log(question);
 }
   playerService = inject(PlayerService);
@@ -207,6 +217,7 @@ export class DailyQuestionComponent {
  wager: number = 0;
  answer: string = "";
  status: string = '';
+ questionMedia: string = "";
  correctGuess: boolean = false;
  revealFlag: boolean = false;
  guessFlag: boolean = false;

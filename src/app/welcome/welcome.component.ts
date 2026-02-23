@@ -30,7 +30,7 @@ export class WelcomeComponent {
   readonly numPlayers = signal('');
   playerService = inject(PlayerService);
   public isPlay = true;
-  public versionNum: string = '1.5.1';
+  public versionNum: string = '1.6.0';
 
   public openDialog(players: number): void{
     this.dialog.open(WelcomePlayerComponent,{
@@ -44,6 +44,13 @@ export class WelcomeComponent {
     this.router.navigateByUrl('/board');
   }
 
+  public goToSettings(){
+    this.router.navigateByUrl('settings')
+  }
+
+  public goToDeveloper(){
+    this.router.navigateByUrl('developer')
+  }
 }
 
 @Component({

@@ -47,14 +47,14 @@ export class BoardComponent {
    //console.log(this.playerService.finalPlayers());
 
    
-   //this.playerService.playerArray()[0].score = 1000;
-   //this.playerService.playerArray()[1].score = 1000;
+   this.playerService.playerArray()[0].score = 1000;
+   this.playerService.playerArray()[1].score = 1000;
    //this.playerService.playerArray()[2].score = 1000;
   }
 
   playerService = inject(PlayerService);
   readonly dialog = inject(MatDialog);
-  numOfQuestions: number = 0;
+  numOfQuestions: number = 59;
   switchedData: boolean = false;
   gameOver: boolean = false;
   bestPlayer: any = {};
@@ -62,9 +62,9 @@ export class BoardComponent {
   dailyFlag: boolean = false;
 
   double_Dict = {
-    first:[0,1],
-    second:[2,2],
-    third:[5,3]
+    first:[2,3],
+    second:[1,1],
+    third:[4,2]
   }
 
   public randomDaily(min: number, max: number): number{

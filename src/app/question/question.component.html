@@ -1,6 +1,13 @@
 <div class="textSpace">
 <mat-dialog-content>
-    {{ question.data.question }}
+@if (question.data.questionType == "image"){
+    <div>{{question.data.question}}</div>
+    <img [src]=questionMedia alt="Test Image" width="50%" height="50%">
+}
+@else{
+    <div style="width: 100%;white-space: pre-line">{{ question.data.question }}</div>
+}
+
 </mat-dialog-content>
 @if (!allGuess && !gracePeriodOver){
     {{timerService.countDown()}}

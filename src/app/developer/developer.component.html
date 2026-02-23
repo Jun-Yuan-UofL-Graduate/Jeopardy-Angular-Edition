@@ -1,0 +1,56 @@
+<h2 class="text-center">Question List</h2>
+
+<div class="container">
+    <form>
+        <label>Select a Category:</label>
+        <select class="form-control" (change)="changeCategory($event)" [(ngModel)]="localSelectedCategory" id="categoryName" name="categoryName">
+            <option *ngFor="let category of categoryList; let i = index" [ngValue]="category">{{category.catName}}</option>
+        </select>
+    </form>
+    @if(showOptions){
+        <div>
+            <form>
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <input type="text" class="form-control" [(ngModel)] = "userCategoryName" name="category_name">
+                </div>
+            </form>
+            <button class="btn btn-primary" (click)="addQuestion()">Add Question</button>
+            <button class="btn btn-success" (click)="createCategory()">Create Category</button>
+            <button class="btn btn-danger" (click)="deleteCategory()">Delete Category</button>
+        </div>
+    }
+
+    <!-- <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Answer</td>
+                <td>Question</td>
+                <td>Beginning</td>
+                <td>Value</td>
+                <td>QuestionType</td>
+                <td>QuestionSource</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let question of questions2">
+                <td>{{ question.answer}}</td>
+                <td>{{ question.question}}</td>
+                <td>{{ question.beginning}}</td>
+                <td>{{ question.value}}</td>
+                <td>{{ question.questionType}}</td>
+                <td>{{ question.questionSource}}</td>
+                <td>
+                    <button (click)="updateQuestion(question.id)" class="btn btn-info">Update</button>
+                    <button (click)="deleteQuestion(question.id)" class="btn btn-danger">Delete</button>
+                    <button (click)="viewQuestion(question.id)" class="btn">View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div> -->
+
+<div class="container">
+    <app-developer-table></app-developer-table>
+</div>
