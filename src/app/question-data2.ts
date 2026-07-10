@@ -1,4 +1,6 @@
-export interface QuestionData2 {
+import { CategoryData } from "./category-data"; 
+
+export interface QuestionData {
     id: number;
     question: string;
     beginning: string;
@@ -6,5 +8,5 @@ export interface QuestionData2 {
     value: number;
     questionType: string;
     questionSource?: string;
-    categoryId: number;
+    category: CategoryData;
 }

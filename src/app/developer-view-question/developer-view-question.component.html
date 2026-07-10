@@ -1,11 +1,15 @@
 <h3>View Question Details</h3>
 
 <div>
+    // Due to the nature of Jeopardy, questions and answers are used incorrectly internally. 
+    // This will be corrected in a future update
     <div>
-        <label><b> Question: </b></label> {{question.question}}
+        <!-- <label><b> Question: </b></label> {{question.question}} -->
+         <label><b> Answer: </b></label> {{question.question}}
     </div>
     <div>
-        <label><b> Answer(s): </b></label> {{question.answer}}
+        <!-- <label><b> Answer(s): </b></label> {{question.answer}} -->
+         <label><b> Questions(s): </b></label> {{question.answer}}
     </div>
     <div>
         <label><b> Beginning: </b></label> {{question.beginning}}

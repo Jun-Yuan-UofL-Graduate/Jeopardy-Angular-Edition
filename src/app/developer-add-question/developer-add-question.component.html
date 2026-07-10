@@ -6,13 +6,17 @@
     <h2>Category Name: {{currentCategory.catName}}</h2>
 </div>
 
+// Due to the nature of Jeopardy, questions and answers are used incorrectly internally. 
+// This will be corrected in a future update
 <div class="form-group">
-    <label>Question</label>
+    <!-- <label>Question (ie: Square)</label> -->
+    <label>Answer (ie: This shape has 4 sides)</label>
     <input type="text" class="form-control" [(ngModel)] = "question.question" id="question" name="question">
 </div>
 
 <div class="form-group">
-    <label>Answer</label>
+    <!-- <label>Answer (ie: This shape has 4 sides)</label> -->
+    <label>Question (ie: Square)</label>
     <input type="text" class="form-control" [(ngModel)] = "question.answer" id="answer" name="answer">
 </div>
 

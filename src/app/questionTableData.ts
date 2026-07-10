@@ -1,6 +1,7 @@
 import { QuestionData } from "./questionData";
 
 export interface QuestionTableData{
-    category: string;
-    questions: QuestionData[];
-  }
+  category: string;
+  questions: QuestionData[];
+  categoryId: number;
+}

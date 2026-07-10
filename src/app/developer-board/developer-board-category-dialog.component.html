@@ -1,0 +1,11 @@
+<h2>Please select a category to add</h2>
+ <select class="form-control"  [(ngModel)]="localSelectedCategory" id="categoryName" name="categoryName">
+        <option *ngFor="let category of categoryList; let i = index" [ngValue]="category">{{category.catName}}</option>
+</select>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button mat-dialog-close (click) = "confirm()">Confirm</button>
+</mat-dialog-actions>
+
+

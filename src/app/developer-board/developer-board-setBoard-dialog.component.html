@@ -1,0 +1,20 @@
+<h2>Set the board</h2>
+
+@if(existingBoardFound){
+    <h2>{{warningMessage}}</h2>
+    <h3>{{subWarningMessage}}</h3>
+    
+    <button (click)="finalConfirm()">Yes</button>
+    <button mat-button mat-dialog-close >No</button>
+    <!-- (click)="cancel()" -->
+}
+@else{
+    <h3>{{warningMessage}}</h3>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedBoardOption">
+        <mat-radio-button *ngFor="let board of boardOptions" [value]="board" (click)="confirm(board.id)">
+            {{board.optionLabel}}
+        </mat-radio-button>
+    </mat-radio-group>
+
+    <button mat-button mat-dialog-close>Cancel</button>
+}

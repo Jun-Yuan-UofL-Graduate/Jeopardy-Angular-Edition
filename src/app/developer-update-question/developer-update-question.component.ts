@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { QuestionData2 } from '../question-data2';
+import { QuestionData } from '../question-data2';
 import { QuestionService } from '../question.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionApiService } from '../question-api.service';
@@ -17,13 +17,12 @@ import { QuestionApiService } from '../question-api.service';
   styleUrl: './developer-update-question.component.css'
 })
 export class DeveloperUpdateQuestionComponent {
-  question: QuestionData2 = {} as QuestionData2;
-
+  question: QuestionData = {} as QuestionData;
   id: number;
-  beginnings = ['What is', 'What is a', 'What is an', 'What is the', 'What are', 'Who is', 'Who are', 'When is', 'Where is']
-  values = [200, 400, 600, 800, 1000]
-  types = ['text', 'image']
-  isDisabled = true
+  beginnings:string[] = ['What is', 'What is a', 'What is an', 'What is the', 'What are', 'Who is', 'Who are', 'When is', 'Where is']
+  values:number[] = [200, 400, 600, 800, 1000]
+  types:string[] = ['text', 'image']
+  isDisabled:boolean = true
 
   _val: number = this.values[0];
   _beginning: string = this.beginnings[0];

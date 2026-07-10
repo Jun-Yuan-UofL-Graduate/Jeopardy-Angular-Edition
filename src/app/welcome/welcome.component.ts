@@ -2,9 +2,9 @@ import { Component, inject, signal, Inject } from '@angular/core';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { PlayerService } from '../player.service';
 import { MatDialog, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {FormsModule} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -50,6 +50,10 @@ export class WelcomeComponent {
 
   public goToDeveloper(){
     this.router.navigateByUrl('developer')
+  }
+
+  public goToDeveloper2(){
+    this.router.navigateByUrl('board_editor')
   }
 }
 

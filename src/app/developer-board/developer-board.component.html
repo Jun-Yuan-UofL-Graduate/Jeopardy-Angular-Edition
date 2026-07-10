@@ -1,0 +1,62 @@
+<div id="board_editor_functions">
+    <!-- <button>Create Board</button> -->
+    <button (click)="saveBoard()">Save Board</button>
+    <button (click)="loadBoard()">Load Board</button>
+    <button (click)="resetBoard()">Reset Board</button>
+    <button (click)="deleteBoard()">Delete Board</button>
+    <button (click)="deleteAllBoards()">Delete All Boards</button>
+    <select [(ngModel)]="localSelectedBoard">
+      <option *ngFor="let boardName of allSavedBoardNames" [ngValue]="boardName">{{boardName}}</option>
+    </select>
+    <button (click)="setBoard()">Set Board</button>
+    <button (click)="goHome()">Home</button>
+</div>
+
+<div id="board_editor">
+
+<div id="answer_wrapper">
+<h1>Answers</h1>
+    <h2>{{sideBarCategoryName}}</h2>
+<div id="answer_list">
+    <div *ngFor="let a of sideBarCategoryQuestions" id="answer_droplist">
+        <div class="drag_answer" draggable="true"  (dragstart)="record($event, a)" >
+            <div>
+                {{a.question}}
+            </div>
+            <div>
+                {{a.answer}}
+            </div>
+            <div>
+                ${{a.value}}
+            </div>
+            <div>
+                {{a.questionType}}
+            </div>
+        </div>
+    </div>
+    
+</div>
+</div>
+
+
+<div id="board">
+    <h2>{{currentBoardName}}</h2>
+    <div class="columns" *ngFor="let column of dataSource; let j = index">
+      <mat-card class="categories" (click)="listCategory(j)" 
+      (mouseenter)="mouseEnter(column)" (mouseleave)="mouseLeave(column)">
+        <!-- (click)="listCategory(column, j)" -->
+        {{column.category}}
+      </mat-card>
+      <mat-card class="mat-elevation-z0" *ngFor="let question of column.questions; let k = index"
+      (dragover)="onDragOver($event)" (drop)="onDrop($event, j, k)" (click)="viewQuestion(j, k)">
+        @if(question.question != ""){
+            ${{question.value}}
+        }
+        @else{
+           <mat-icon >add</mat-icon>
+        }     
+      </mat-card>
+    </div>
+  </div>
+
+  </div>

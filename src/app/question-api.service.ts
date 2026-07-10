@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CategoryData } from './category-data';
 import { Observable } from 'rxjs';
-import { QuestionData2 } from './question-data2';
+import { QuestionData } from './question-data2';
 import { QuestionService } from './question.service';
 
 @Injectable({
@@ -26,23 +26,27 @@ export class QuestionApiService {
     return this.httpClient.get<CategoryData[]>(`${this.baseURLCategory}`);
   }
 
-  getQuestionById(id: number): Observable<QuestionData2>{
-    return this.httpClient.get<QuestionData2>(`${this.baseURL}/${id}`);
+  getQuestionById(id: number): Observable<QuestionData>{
+    return this.httpClient.get<QuestionData>(`${this.baseURL}/${id}`);
   }
   
-  getQuestionsByCategory(catId: number): Observable<QuestionData2[]>{
-    return this.httpClient.get<QuestionData2[]>(`${this.baseURLCategory}/2/${catId}`);
+  getQuestionsByCategory(catId: number): Observable<QuestionData[]>{
+    return this.httpClient.get<QuestionData[]>(`${this.baseURLCategory}/2/${catId}`);
+  }
+
+  getQuestionsByCategory2(catId: number): Observable<QuestionData[]>{
+    return this.httpClient.get<QuestionData[]>(`${this.baseURLCategory}/2/${catId}`);
   }
 
   createCategory(categoryName: String): Observable<Object>{
     return this.httpClient.post<String>(`${this.baseURLCategory}`, categoryName);
   }
 
-  createQuestion(question: QuestionData2): Observable<Object>{
-    return this.httpClient.post<QuestionData2>(`${this.baseURLCategory}/createQuestion`, question)
+  createQuestion(question: QuestionData): Observable<Object>{
+    return this.httpClient.post<QuestionData>(`${this.baseURLCategory}/createQuestion`, question)
   }
 
-  updateQuestion(id: number, question: QuestionData2): Observable<Object>{
+  updateQuestion(id: number, question: QuestionData): Observable<Object>{
     return this.httpClient.put(`${this.baseURL}/${id}`, question);
   }
 

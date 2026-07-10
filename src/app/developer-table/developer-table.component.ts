@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { QuestionData2 } from '../question-data2';
+import { QuestionData } from '../question-data2';
 import { QuestionService } from '../question.service';
 import { CategoryData } from '../category-data';
 import { Router } from '@angular/router';
@@ -27,7 +27,7 @@ import { QuestionApiService } from '../question-api.service';
 })
 export class DeveloperTableComponent {
 
-  dataSource = new MatTableDataSource<QuestionData2>();
+  dataSource = new MatTableDataSource<QuestionData>();
   displayedColumns: string[] = ['id', 'answer', 'question', 'beginning', 'value', 'questionType', 'questionSource', 'action'];
 
   @ViewChild(MatSort) sort!: MatSort;

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { QuestionService } from '../question.service';
 import { Router } from '@angular/router';
-import { QuestionData2 } from '../question-data2';
+import { QuestionData } from '../question-data2';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CategoryData } from '../category-data';
 import { QuestionApiService } from '../question-api.service';
+import { QuestionList } from '../questionList';
 
 @Component({
   selector: 'app-developer-add-question',
@@ -18,25 +19,22 @@ import { QuestionApiService } from '../question-api.service';
   styleUrl: './developer-add-question.component.css'
 })
 export class DeveloperAddQuestionComponent {
-question: QuestionData2 = {} as QuestionData2;
 
-  beginnings = ['What is', 'What is a', 'What is an', 'What is the', 'What are', 'Who is', 'Who are', 'When is', 'Where is']
-  values = [200, 400, 600, 800, 1000]
-  types = ['text', 'image']
-
-  isDisabled = true
+  question = new QuestionList().defaultQuestion
+  beginnings:string[] = ['What is', 'What is a', 'What is an', 'What is the', 'What are', 'Who is', 'Who are', 'When is', 'Where is']
+  values:number[] = [200, 400, 600, 800, 1000]
+  types:string[] = ['text', 'image']
+  isDisabled:boolean = true
   currentCategory: CategoryData;
+
   constructor(
     private questionService: QuestionService, 
     private questionAPI: QuestionApiService, 
     private router: Router)
   {
-    this.question.beginning = 'What is'
-    this.question.value = 200
-    this.question.questionType = 'text'
-
     this.currentCategory = this.questionService.selectedCategory.value
-    this.question.categoryId = this.questionService.selectedCategory.value.catId;
+    this.question.category.catId = this.questionService.selectedCategory.value.catId
+    this.question.category.catName = this.currentCategory.catName
   }
 
   changeBeginning(e: any){

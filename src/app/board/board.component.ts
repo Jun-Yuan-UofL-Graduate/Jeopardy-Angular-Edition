@@ -7,12 +7,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { PlayerService } from '../player.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { QuestionList } from '../questionList';
 import { PlayerHeaderComponent } from '../player-header/player-header.component';
 import { DailyQuestionComponent } from '../question/question.component';
 import { QuestionData } from '../questionData';
 import { QuestionTableData } from '../questionTableData';
-
+import { LocalStorageService } from '../local-storage.service';
 @Component({
   selector: 'app-board',
   standalone: true,
@@ -33,12 +32,18 @@ import { QuestionTableData } from '../questionTableData';
 })
 export class BoardComponent {
 
-  dataSource: QuestionTableData[];
+  dataSource: QuestionTableData[] = [];
   //dataSourceAgain$ = of(new QuestionList().dataSource).subscribe((result: any) => this.dataSourceAgain = result);
   
-  constructor(private cd: ChangeDetectorRef, private router: Router) { 
-   this.dataSource = new QuestionList().dataSource;
+  constructor(
+    private cd: ChangeDetectorRef, 
+    private router: Router, 
+    private localStorageService: LocalStorageService
+  ) { 
+  this.dataSource = this.localStorageService.getPlayableBoardData()[0]?.data as QuestionTableData[]
 
+
+    console.log(this.dataSource)
 
    let rand = Math.floor(Math.random() * this.playerService.playerArray().length);
    this.playerService.playerArray()[rand].lastCorrect = true;
@@ -54,7 +59,7 @@ export class BoardComponent {
 
   playerService = inject(PlayerService);
   readonly dialog = inject(MatDialog);
-  numOfQuestions: number = 59;
+  numOfQuestions: number = 0;
   switchedData: boolean = false;
   gameOver: boolean = false;
   bestPlayer: any = {};
@@ -148,7 +153,7 @@ export class BoardComponent {
   doubleJeopardy(){
     if(this.switchedData != true){
       this.switchedData = true;
-      this.dataSource = new QuestionList().dataSource2;
+        this.dataSource = this.localStorageService.getPlayableBoardData()[1]?.data as QuestionTableData[]
       let dialogRef = this.dialog.open(BoardTransistionComponent);
       dialogRef.afterClosed().subscribe((result) => {
         if(result){

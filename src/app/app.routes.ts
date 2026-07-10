@@ -8,6 +8,7 @@ import { DeveloperComponent } from './developer/developer.component';
 import { DeveloperUpdateQuestionComponent } from './developer-update-question/developer-update-question.component';
 import { DeveloperAddQuestionComponent } from './developer-add-question/developer-add-question.component';
 import { DeveloperViewQuestionComponent } from './developer-view-question/developer-view-question.component';
+import { DeveloperBoardComponent } from './developer-board/developer-board.component';
 
 export const routes: Routes = [
     //{ path: '', redirectTo: '', pathMatch: 'full'},
@@ -20,5 +21,6 @@ export const routes: Routes = [
     { path: 'add_question', component: DeveloperAddQuestionComponent},
     // { path: 'add_question/:id', component: DeveloperAddQuestionComponent},
     { path: 'update_question/:id', component: DeveloperUpdateQuestionComponent},
-    { path: 'view_question/:id', component: DeveloperViewQuestionComponent}
+    { path: 'view_question/:id', component: DeveloperViewQuestionComponent},
+    { path: 'board_editor', component: DeveloperBoardComponent}
 ];

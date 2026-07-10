@@ -1,0 +1,8 @@
+<h2>Please enter a name for new board</h2>
+
+<input type="text" [(ngModel)]="newBoardName">
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click) = "confirm()">Confirm</button>
+</mat-dialog-actions>
