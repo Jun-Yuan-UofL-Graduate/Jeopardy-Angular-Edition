@@ -1,10 +1,27 @@
-# MAJOR UPDATE Added Version 1.6.0 (2/22/26)
+# MAJOR UPDATE Added Version 1.7.0 (7/10/26)
 ### Note: Components, variables, and names are subject to change
 
 # IMPORTANT NOTICE ABOUT THIS PROJECT
 This project is NOT intended for profit or commercial use. This project was designed for personal use with family. This repository exists to demonstrate my current skills and abilities with Angular, HTML, CSS, TypeScript, and Spring Boot to employers. Any copyright infringement regarding Jeopardy or any IPs used in these questions is not intended. Each IP is the property of each respective company and owner.
 
+# Planned Features to be Added
+* Major UI update to Developer and DeveloperBoard components
+* Allowing for multiple correct questions
+* Full migration of hardcoded questions and answers into database
+
+# Possible Features to be Added
+* Implementing profiles to allow for personally saved questions, categories and boards
+* Implementing login and data security capabilities 
+ 
 # Jeopardy-Angular-Edition Patch Notes
+## Version 1.7.0
+* Created Board Editor UI to allow users to create, update and delete boards directly from the Angular UI
+* Created mulitple dialog boxes in DeveloperBoard component for easy user understanding
+* Created LocalStorage Service to allow users to save data locally, allowing for quick retrieval in future sessions
+* Added new QuestionData to allow Board component to use and display newer versions of Questions
+* Made minor edits to Question and Answer labels, to better match proper Jeopardy terms
+* General code clean-up
+  
 ## Version 1.6.0
 * Added Full Stack functionality to the project using Spring Boot to connect Angular UI to MySQL tables
 * Created Developer UI components to allow users to add, update, and delete categories/questions directly from the Angular UI
